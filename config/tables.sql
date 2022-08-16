@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS flight(
   FOREIGN KEY(destination_id) REFERENCES destination(destination_id)
 );
 
-CREATE TYPE status_ticket AS ENUM('success', 'waiting', 'failded');
+CREATE TYPE status_ticket AS ENUM('success', 'waiting', 'failed');
 
 CREATE TABLE IF NOT EXISTS booking(
   booking_id INT GENERATED ALWAYS AS IDENTITY,
