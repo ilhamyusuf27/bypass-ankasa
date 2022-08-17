@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users(
   nationality VARCHAR(50),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY(user_id),
+  PRIMARY KEY(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS destination(
@@ -39,8 +39,7 @@ CREATE TABLE IF NOT EXISTS airlines(
   facilities TEXT[],
   refundable BOOLEAN NOT NULL,
   reschedulable BOOLEAN,
-  PRIMARY KEY(airline_id),
-  FOREIGN KEY(facilities_id) REFERENCES facilities(facilities_id)
+  PRIMARY KEY(airline_id)
 );
 
 CREATE TABLE IF NOT EXISTS flight(
