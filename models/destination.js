@@ -30,7 +30,7 @@ const findByName = (name) => {
 const create = (data) => {
 	const { country, city, airport_name, destination_image } = data;
 	return new Promise((resolve, reject) => {
-		db.query(`INSERT INTO destination (country, city, airport_name) VALUES ($1, $2, $3, $4) RETURNING *`, [country, city, airport_name, destination_image], (err, result) => {
+		db.query(`INSERT INTO destination (country, city, airport_name, destination_image) VALUES ($1, $2, $3, $4) RETURNING *`, [country, city, airport_name, destination_image], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
@@ -49,7 +49,7 @@ const update = (data) => {
 
 const destroy = (id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`DELETE FROM destination WHERE id=$1 RETURNING *`, [id], (err, result) => {
+		db.query(`DELETE FROM destination WHERE destination_id=$1 RETURNING *`, [id], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
