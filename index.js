@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 const notFound = require("./routes/notFound");
 const errorHandler = require("./middlewares/errorHandler");
+const destination = require("./routes/destination");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(destination);
 app.use(notFound);
 app.use(errorHandler);
 
