@@ -24,7 +24,7 @@ const findById = (id) => {
 const findByEmail = (email) => {
   return new Promise((resolve, reject) => {
     db.query(
-      'SELECT email, password FROM users WHERE email=$1',
+      'SELECT user_id, full_name, email, password FROM users WHERE email=$1',
       [email],
       (err, result) => {
         if (err) reject(err)
