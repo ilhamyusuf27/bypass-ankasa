@@ -9,6 +9,8 @@ const bodyParser = require("body-parser");
 const userRouter = require('./routes/user')
 const notFound = require("./routes/notFound");
 const errorHandler = require("./middlewares/errorHandler");
+const destination = require("./routes/destination");
+const airlines = require("./routes/airlines");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -19,7 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/users', userRouter);
-
+app.use(destination);
+app.use(airlines);
 app.use(notFound);
 app.use(errorHandler);
 
