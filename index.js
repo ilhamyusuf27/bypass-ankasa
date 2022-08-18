@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+const userRouter = require('./routes/user')
 const notFound = require("./routes/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -16,6 +17,8 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use('/users', userRouter);
 
 app.use(notFound);
 app.use(errorHandler);
