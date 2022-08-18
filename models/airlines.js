@@ -20,7 +20,16 @@ const findById = (id) => {
 
 const findByName = (name) => {
 	return new Promise((resolve, reject) => {
-		db.query(`SELECT * FROM destination WHERE airline_name ~* $1 OR airline_code ~* $1 OR class_category`, [name], (err, result) => {
+		db.query(`SELECT * FROM airlines WHERE airline_name ~* $1 OR airline_code ~* $1 OR class_category`, [name], (err, result) => {
+			if (err) return reject(err);
+			resolve(result);
+		});
+	});
+};
+
+const findByAirlineCode = (airline_code) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM airlines WHERE airline_code ~* $1`, [airline_code], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
@@ -28,11 +37,11 @@ const findByName = (name) => {
 };
 
 const create = (data) => {
-	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilies, refundable, reschedulable } = data;
+	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`INSERT INTO destination (airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilies, refundable, reschedulable) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilies, refundable, reschedulable],
+			`INSERT INTO airlines (airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
@@ -42,11 +51,11 @@ const create = (data) => {
 };
 
 const update = (data) => {
-	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilies, refundable, reschedulable } = data;
+	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_id } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`UPDATE airlines SET airline_code =$1, airline_name=$2, airline_image=$3, class_category=$4, price_adult=$5, price_child=$6, facilies=$7, refundable=$8, reschedulable=$9 RETURNING *`,
-			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilies, refundable, reschedulable],
+			`UPDATE airlines SET airline_code =$1, airline_name=$2, airline_image=$3, class_category=$4, price_adult=$5, price_child=$6, facilities=$7, refundable=$8, reschedulable=$9 WHERE airline_id = $10 RETURNING *`,
+			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_id],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
@@ -57,11 +66,11 @@ const update = (data) => {
 
 const destroy = (id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`DELETE FROM airlines WHERE airlines_id=$1 RETURNING *`, [id], (err, result) => {
+		db.query(`DELETE FROM airlines WHERE airline_id=$1 RETURNING *`, [id], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
 	});
 };
 
-module.exports = { getAll, findById, findByName, create, update, destroy };
+module.exports = { getAll, findById, findByName, create, update, destroy, findByAirlineCode };
