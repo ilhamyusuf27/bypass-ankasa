@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
   user_id INT GENERATED ALWAYS AS IDENTITY,
   full_name VARCHAR(50) NOT NULL,
   email VARCHAR(50) UNIQUE NOT NULL,
-  password VARCHAR(20) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   phone VARCHAR(12) UNIQUE,
   user_image VARCHAR(255),
   gender genders,

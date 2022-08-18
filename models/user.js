@@ -1,4 +1,5 @@
 const db = require('../config/db')
+const ErrorResponse = require('../utils/ErrorResponse')
 
 const findAll = () => {
   return new Promise((resolve, reject) => {
@@ -13,7 +14,9 @@ const findById = (id) => {
   return new Promise((resolve, reject) => {
     db.query('SELECT * FROM users WHERE user_id = $1', [id], (err, result) => {
       if (err) return reject(err)
-      resolve(result)
+      if (result.rowCount) return resolve(result.rows[0])
+
+      reject(new ErrorResponse('User not Found', 404))
     })
   })
 }
@@ -60,7 +63,7 @@ const update = (user) => {
 
   return new Promise((resolve, reject) => {
     db.query(
-      'UPDATE users SET full_name=$1, email=s2, password=$3, phone=s4, user_image=$5, gender=$6, role=$7, nationality=$8, updated_at=$9 WHERE user_id=$10',
+      'UPDATE users SET full_name=$1, email=$2, password=$3, phone=$4, user_image=$5, gender=$6, role=$7, nationality=$8, updated_at=$9 WHERE user_id=$10',
       [...columns],
       (err, result) => {
         if (err) return reject(err)
