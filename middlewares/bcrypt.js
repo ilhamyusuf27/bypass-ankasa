@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const ErrorResponse = require('../utils/ErrorResponse')
 const asyncHandler = require('./asyncHandler')
-const saltRounds = 10
+const saltRounds = 9
 
 const passwordHash = asyncHandler((req, res, next) => {
   bcrypt.hash(req.body.password, saltRounds, (err, result) => {
