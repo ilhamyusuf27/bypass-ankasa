@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users(
   phone VARCHAR(12) UNIQUE,
   user_image VARCHAR(255),
   gender genders,
-  role roles,
+  role roles DEFAULT 'user',
   nationality VARCHAR(50),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
