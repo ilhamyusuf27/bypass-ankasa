@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "standard && node my-test",
-    "start": "nodemon index"
+    "start": "nodemon index",
+    "lint:fix": "standard --fix"
   },
   "repository": {
     "type": "git",
