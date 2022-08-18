@@ -20,7 +20,7 @@ const findById = (id) => {
 
 const findByName = (name) => {
 	return new Promise((resolve, reject) => {
-		db.query(`SELECT * FROM destination WHERE destination_id ~* $1`, [name], (err, result) => {
+		db.query(`SELECT * FROM destination WHERE city ~* $1 OR country ~* $1`, [name], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
