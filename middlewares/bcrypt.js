@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const ErrorResponse = require('../utils/ErrorResponse')
-const asyncHandler = require('./asyncHandler')
+// test
+const asyncHandler = require('./asyncHandler');
 const saltRounds = 9
 
 const passwordHash = asyncHandler((req, res, next) => {
