@@ -67,7 +67,7 @@ const update = (data) => {
 
 const destroy = (ticket_id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`DELETE tickets WHERE ticket_id = $1 RETURNING *`, [ticket_id], (err, result) => {
+		db.query(`DELETE FROM tickets WHERE ticket_id = $1 RETURNING *`, [ticket_id], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});

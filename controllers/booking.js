@@ -106,11 +106,12 @@ const cancelBooking = async (req, res) => {
 };
 
 const deleteData = async (req, res) => {
-	const { id } = req.body;
+	const { id } = req.params;
+	console.log(req.params);
 	const findTicket = await model.findById(id);
 
 	if (!findTicket.rowCount) {
-		return res.status(404).json({ message: `Cannot delete ticket with id ${id}, id ticket not found` });
+		return res.status(404).json({ message: `Cannot delete booking with id ${id}, id booking not found` });
 	}
 
 	const data = await model.destroy(id);
