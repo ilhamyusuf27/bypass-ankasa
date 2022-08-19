@@ -37,11 +37,11 @@ const findByAirlineCode = (airline_code) => {
 };
 
 const create = (data) => {
-	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable } = data;
+	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, pic, phone } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`INSERT INTO airlines (airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable],
+			`INSERT INTO airlines (airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, pic, phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
+			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, pic, phone],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
@@ -51,11 +51,11 @@ const create = (data) => {
 };
 
 const update = (data) => {
-	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_id } = data;
+	const { airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, pic, phone, airline_id } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`UPDATE airlines SET airline_code =$1, airline_name=$2, airline_image=$3, class_category=$4, price_adult=$5, price_child=$6, facilities=$7, refundable=$8, reschedulable=$9 WHERE airline_id = $10 RETURNING *`,
-			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_id],
+			`UPDATE airlines SET airline_code =$1, airline_name=$2, airline_image=$3, class_category=$4, price_adult=$5, price_child=$6, facilities=$7, refundable=$8, reschedulable=$9, pic=$10, phone=$11 WHERE airline_id = $12 RETURNING *`,
+			[airline_code, airline_name, airline_image, class_category, price_adult, price_child, facilities, refundable, reschedulable, pic, phone, airline_id],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);

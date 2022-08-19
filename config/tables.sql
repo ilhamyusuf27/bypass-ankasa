@@ -36,6 +36,8 @@ CREATE TABLE IF NOT EXISTS airlines(
   price_adult INT DEFAULT 0,
   price_child INT DEFAULT 0,
   facilities TEXT[],
+  pic VARCHAR(255),
+  phone VARCHAR(12) UNIQUE,
   refundable BOOLEAN NOT NULL,
   reschedulable BOOLEAN,
   PRIMARY KEY(airline_id)
@@ -56,12 +58,26 @@ CREATE TABLE IF NOT EXISTS booking(
   booking_id INT GENERATED ALWAYS AS IDENTITY,
   user_id INT,
   airline_id INT,
-  destination VARCHAR(50),
-  departure VARCHAR(50),
-  flight_date TIMESTAMP WITH TIME ZONE,
-  ticket_status status_ticket,
+  ticket_id INT,
+  ticket_status status_ticket SET DEFAULT 'waiting',
   is_used boolean,
+  child INT,
+  adult INT,
+  total_price INT,
   PRIMARY KEY(booking_id),
   FOREIGN KEY(user_id) REFERENCES users(user_id),
+  FOREIGN KEY(airline_id) REFERENCES airlines(airline_id)
+  FOREIGN KEY(ticket_id) REFERENCES tickets(ticket_id)
+);
+
+CREATE TABLE IF NOT EXISTS tickets(
+  ticket_id INT GENERATED ALWAYS AS IDENTITY,
+  airline_id INT,
+  origin VARCHAR(255),
+  destination VARCHAR(255),
+  departure DATE
+  price INT,
+  stock INT,
+  PRIMARY KEY(ticket_id),
   FOREIGN KEY(airline_id) REFERENCES airlines(airline_id)
 );

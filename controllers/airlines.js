@@ -48,7 +48,7 @@ const getByName = async (req, res) => {
 
 const addData = async (req, res) => {
 	try {
-		let { airline_code, airline_name, class_category, price_adult, price_child, facilities1, facilities2, facilities3, refundable, reschedulable } = req.body;
+		let { airline_code, airline_name, class_category, price_adult, price_child, facilities1, facilities2, facilities3, refundable, reschedulable, pic, phone } = req.body;
 		const fileImage = req?.file?.path;
 		let uploaded;
 		let facilities = [];
@@ -62,6 +62,8 @@ const addData = async (req, res) => {
 		airline_name = airline_name.trim();
 		price_adult = price_adult.trim();
 		price_child = price_child.trim();
+		pic = pic.trim();
+		phone = phone.trim();
 
 		if (fileImage) {
 			const uploadImage = await cloudinary.uploader.upload(fileImage, {
@@ -91,6 +93,8 @@ const addData = async (req, res) => {
 			facilities,
 			refundable,
 			reschedulable,
+			pic,
+			phone,
 		};
 
 		const newAirline = await model.create(airlineData);
@@ -108,7 +112,7 @@ const addData = async (req, res) => {
 const updateData = async (req, res) => {
 	try {
 		const { id } = req.params;
-		let { airline_code, airline_name, class_category, price_adult, price_child, facilities1, facilities2, facilities3, refundable, reschedulable } = req.body;
+		let { airline_code, airline_name, class_category, price_adult, price_child, facilities1, facilities2, facilities3, refundable, reschedulable, pic, phone } = req.body;
 		const fileImage = req?.file?.path;
 		let uploaded;
 		let facilities = [];
@@ -119,6 +123,8 @@ const updateData = async (req, res) => {
 		airline_name = airline_name.trim();
 		price_adult = price_adult.trim();
 		price_child = price_child.trim();
+		pic = pic.trim();
+		phone = phone.trim();
 
 		if (findData.rowCount === 0) {
 			return res.status(404).json({
@@ -142,6 +148,8 @@ const updateData = async (req, res) => {
 		price_child = price_child || findData.rows[0].price_child;
 		refundable = refundable || findData.rows[0].refundable;
 		reschedulable = reschedulable || findData.rows[0].reschedulable;
+		pic = pic || findData.rows[0].pic;
+		phone = phone || findData.rows[0].phone;
 		let airline_image = uploaded || findData.rows[0].airline_image;
 
 		const checkFacilities1 = facilities1 || findData.rows[0].facilities[0] !== null || undefined;
@@ -158,7 +166,7 @@ const updateData = async (req, res) => {
 			facilities.push(facilities3 || findData.rows[0].facilities[2]);
 		}
 
-		const updatedData = { airline_code, airline_name, class_category, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_image, airline_id: id };
+		const updatedData = { airline_code, airline_name, class_category, class_category, price_adult, price_child, facilities, refundable, reschedulable, airline_image, pic, phone, airline_id: id };
 
 		const data = await model.update(updatedData);
 
