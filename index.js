@@ -14,6 +14,7 @@ const destination = require("./routes/destination");
 const airlines = require("./routes/airlines");
 const tickets = require("./routes/tickets");
 const booking = require("./routes/booking");
+const trending = require("./routes/trending");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -29,6 +30,7 @@ app.use(destination);
 app.use(airlines);
 app.use(tickets);
 app.use(booking);
+app.use(trending);
 app.use(notFound);
 app.use(errorHandler);
 

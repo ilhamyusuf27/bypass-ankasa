@@ -72,7 +72,7 @@ const cancel = (data) => {
 
 const destroy = (booking_id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`DELETE booking WHERE booking_id = $1 RETURNING *`, [booking_id], (err, result) => {
+		db.query(`DELETE FROM booking WHERE booking_id = $1 RETURNING *`, [booking_id], (err, result) => {
 			if (err) return reject(err);
 			resolve(result);
 		});
