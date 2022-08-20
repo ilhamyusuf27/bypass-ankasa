@@ -15,6 +15,21 @@ const getAllBooking = async (req, res) => {
 	}
 };
 
+const getAllDetail = async (req, res) => {
+	try {
+		const data = await model.findAllDetail();
+		if (data.rowCount) {
+			return res.status(200).json({
+				total: data.rowCount,
+				data: data.rows,
+			});
+		}
+		res.status(404).json({ message: "Data not found" });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 const getById = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -117,4 +132,4 @@ const deleteData = async (req, res) => {
 	const data = await model.destroy(id);
 	res.status(200).json({ message: `Data booking delete successfully`, result: data.rows });
 };
-module.exports = { getAllBooking, getById, getByUserId, booking, acceptAdmin, cancelBooking, deleteData };
+module.exports = { getAllBooking, getAllDetail, getById, getByUserId, booking, acceptAdmin, cancelBooking, deleteData };
