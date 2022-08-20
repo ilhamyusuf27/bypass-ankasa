@@ -13,7 +13,7 @@ const findAll = () => {
 const findById = (id) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			"SELECT tickets.*, airlines.airline_name, airlines.class_category, airlines.facilities, airlines.airline_image FROM tickets LEFT JOIN airlines ON tickets.airline_id = airlines.airline_id WHERE ticket_id = $1",
+			"SELECT tickets.*,airlines.airline_code, airlines.airline_name, airlines.class_category, airlines.facilities, airlines.airline_image FROM tickets LEFT JOIN airlines ON tickets.airline_id = airlines.airline_id WHERE ticket_id = $1",
 			[id],
 			(err, result) => {
 				if (err) return reject(err);
