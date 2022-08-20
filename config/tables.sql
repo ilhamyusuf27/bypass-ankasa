@@ -59,14 +59,14 @@ CREATE TABLE IF NOT EXISTS booking(
   user_id INT,
   airline_id INT,
   ticket_id INT,
-  ticket_status status_ticket SET DEFAULT 'waiting',
+  ticket_status status_ticket DEFAULT 'waiting',
   is_used boolean,
   child INT,
   adult INT,
   total_price INT,
   PRIMARY KEY(booking_id),
   FOREIGN KEY(user_id) REFERENCES users(user_id),
-  FOREIGN KEY(airline_id) REFERENCES airlines(airline_id)
+  FOREIGN KEY(airline_id) REFERENCES airlines(airline_id),
   FOREIGN KEY(ticket_id) REFERENCES tickets(ticket_id)
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS tickets(
   airline_id INT,
   origin VARCHAR(255),
   destination VARCHAR(255),
-  departure DATE
+  departure DATE,
   price INT,
   stock INT,
   PRIMARY KEY(ticket_id),
