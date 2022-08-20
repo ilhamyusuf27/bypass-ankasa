@@ -88,8 +88,9 @@ const acceptAdmin = async (req, res) => {
 
 		const newData = { ticket_status, booking_id: id };
 
-		const result = await model.accept(newData);
-		res.status(200).json({ message: "Booking already updated", result: result.rows });
+		await model.accept(newData);
+		const update = await model.findAllDetail();
+		res.status(200).json({ message: "Booking already updated", result: update.rows });
 	} catch (error) {
 		console.log(error);
 		res.status(400).json({ message: error.message });
