@@ -13,7 +13,7 @@ const findAll = () => {
 const findAllDetail = () => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			"SELECT booking.*, users.full_name, tickets.origin, tickets.destination, tickets.departure FROM booking LEFT JOIN users ON booking.user_id = users.user_id LEFT JOIN booking.ticket_id = tickets.ticket_id ORDER BY booking_id DESC",
+			"SELECT booking.*, users.full_name, tickets.origin, tickets.destination, tickets.departure FROM booking LEFT JOIN users ON booking.user_id = users.user_id LEFT JOIN tickets ON booking.ticket_id = tickets.ticket_id ORDER BY booking_id DESC",
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
