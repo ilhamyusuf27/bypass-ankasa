@@ -2,19 +2,22 @@ const asyncHandler = require('../middlewares/asyncHandler')
 const { findAll, findById, update, destroy } = require('../models/user')
 const cloudinary = require('../config/cloudinary')
 const moment = require('moment')
+const imageObjectToURL = require('../utils/imageObjectToURL')
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
   const result = await findAll()
   const users = result?.rows
+  const optimizedUserData = imageObjectToURL(users)
 
-  res.status(200).json(users)
+  res.status(200).json(optimizedUserData)
 })
 
 const getUserById = asyncHandler(async (req, res, next) => {
   const id = req?.params?.id
   const user = await findById(id)
+  const optimizedUserData = imageObjectToURL([user])[0]
 
-  res.status(200).json(user)
+  res.status(200).json(optimizedUserData)
 })
 
 const updateUser = asyncHandler(async (req, res, next) => {
