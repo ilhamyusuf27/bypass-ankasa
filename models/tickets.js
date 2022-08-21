@@ -27,7 +27,7 @@ const findDetail = (data) => {
 	const { origin, destination, departure, class_category } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			"SELECT tickets.*, airlines.airline_name, airlines.class_category FROM tickets LEFT JOIN airlines ON tickets.airline_id = airlines.airline_id WHERE tickets.origin ~* $1 AND tickets.destination ~* $2 AND tickets.departure = $3 AND airlines.class_category = $4 ORDER BY price ASC",
+			"SELECT tickets.*, airlines.airline_name, airlines.class_category, airlines.airline_image FROM tickets LEFT JOIN airlines ON tickets.airline_id = airlines.airline_id WHERE tickets.origin ~* $1 AND tickets.destination ~* $2 AND tickets.departure = $3 AND airlines.class_category = $4 ORDER BY price ASC",
 			[origin, destination, departure, class_category],
 			(err, result) => {
 				if (err) return reject(err);
