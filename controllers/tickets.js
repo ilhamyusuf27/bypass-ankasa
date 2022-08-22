@@ -86,8 +86,7 @@ const createTicket = async (req, res) => {
 
 const updateTicket = async (req, res) => {
 	try {
-		let { airline_id, origin, destination, departure, price, stock } = req.body;
-		console.log(req.body);
+		let { airline_id, origin, destination, departure, departure_time, price, stock } = req.body;
 		const { id } = req.params;
 		const data = await model.findById(id);
 
@@ -99,10 +98,11 @@ const updateTicket = async (req, res) => {
 		origin = origin || data.rows[0].origin;
 		destination = destination || data.rows[0].destination;
 		departure = departure || data.rows[0].departure;
+		departure_time = departure_time || data.rows[0].departure_time;
 		price = price || data.rows[0].price;
 		stock = stock || data.rows[0].stock;
 
-		const newData = { airline_id, origin, destination, departure, price, stock, ticket_id: id };
+		const newData = { airline_id, origin, destination, departure, departure_time, price, stock, ticket_id: id };
 
 		const result = await model.update(newData);
 		res.status(200).json({ message: "Ticket already updated", result: result.rows });

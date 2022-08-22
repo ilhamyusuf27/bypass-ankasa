@@ -50,11 +50,11 @@ const findDetail = (data) => {
 };
 
 const create = (data) => {
-	const { airline_id, origin, destination, departure, price, stock } = data;
+	const { airline_id, origin, destination, departure, departure_time, price, stock } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`INSERT INTO tickets (airline_id, origin, destination, departure, price, stock) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-			[airline_id, origin, destination, departure, price, stock],
+			`INSERT INTO tickets (airline_id, origin, destination, departure,departure_time, price, stock) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+			[airline_id, origin, destination, departure, departure_time, price, stock],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
@@ -64,11 +64,11 @@ const create = (data) => {
 };
 
 const update = (data) => {
-	const { airline_id, origin, destination, departure, price, stock, ticket_id } = data;
+	const { airline_id, origin, destination, departure, departure_time, price, stock, ticket_id } = data;
 	return new Promise((resolve, reject) => {
 		db.query(
-			`UPDATE tickets SET airline_id = $1, origin = $2, destination = $3, departure = $4, price = $5, stock = $6 WHERE ticket_id = $7 RETURNING *`,
-			[airline_id, origin, destination, departure, price, stock, ticket_id],
+			`UPDATE tickets SET airline_id = $1, origin = $2, destination = $3, departure = $4, price = $5, stock = $6, departure_time = $7 WHERE ticket_id = $8 RETURNING *`,
+			[airline_id, origin, destination, departure, price, stock, departure_time, ticket_id],
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
