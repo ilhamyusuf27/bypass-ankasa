@@ -16,6 +16,21 @@ const getAllTickets = async (req, res) => {
 	}
 };
 
+const getAllTicketsDetail = async (req, res) => {
+	try {
+		const data = await model.findAllDetail();
+		if (data.rowCount) {
+			return res.status(200).json({
+				total: data.rowCount,
+				data: data.rows,
+			});
+		}
+		res.status(404).json({ message: "Data not found" });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+};
+
 const getById = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -58,7 +73,7 @@ const createTicket = async (req, res) => {
 
 		const data = await model.create(req.body);
 		if (data.rowCount) {
-			const getAll = await model.findAll();
+			const getAll = await model.findAllDetail();
 			return res.status(200).json({
 				data: getAll.rows,
 			});
@@ -98,14 +113,19 @@ const updateTicket = async (req, res) => {
 };
 
 const deleteTicket = async (req, res) => {
-	const { id } = req.body;
-	const findTicket = await model.findById(id);
+	try {
+		const { id } = req.params;
 
-	if (!findTicket.rowCount) {
-		return res.status(404).json({ message: `Cannot delete ticket with id ${id}, id ticket not found` });
+		const findTicket = await model.findById(id);
+
+		if (!findTicket.rowCount) {
+			return res.status(404).json({ message: `Cannot delete ticket with id ${id}, id ticket not found` });
+		}
+
+		const data = await model.destroy(id);
+		res.status(200).json({ message: `Ticket delete successfully`, result: data.rows });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
 	}
-
-	const data = await model.destroy(id);
-	res.status(200).json({ message: `Ticket delete successfully`, result: data.rows });
 };
-module.exports = { getAllTickets, getById, getDetail, createTicket, updateTicket, deleteTicket };
+module.exports = { getAllTickets, getById, getDetail, createTicket, updateTicket, deleteTicket, getAllTicketsDetail };

@@ -10,6 +10,18 @@ const findAll = () => {
 	});
 };
 
+const findAllDetail = () => {
+	return new Promise((resolve, reject) => {
+		db.query(
+			"SELECT tickets.*, airlines.airline_code, airlines.airline_name, airlines.class_category FROM tickets LEFT JOIN airlines ON tickets.airline_id = airlines.airline_id ORDER BY ticket_id DESC",
+			(err, result) => {
+				if (err) return reject(err);
+				resolve(result);
+			}
+		);
+	});
+};
+
 const findById = (id) => {
 	return new Promise((resolve, reject) => {
 		db.query(
@@ -74,4 +86,4 @@ const destroy = (ticket_id) => {
 	});
 };
 
-module.exports = { findAll, findById, findDetail, create, update, destroy };
+module.exports = { findAll, findAllDetail, findById, findDetail, create, update, destroy };
