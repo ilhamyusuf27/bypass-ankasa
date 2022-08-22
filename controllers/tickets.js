@@ -58,8 +58,9 @@ const createTicket = async (req, res) => {
 
 		const data = await model.create(req.body);
 		if (data.rowCount) {
+			const getAll = await model.findAll();
 			return res.status(200).json({
-				data: data.rows,
+				data: getAll.rows,
 			});
 		}
 		res.status(404).json({ message: "Data not found" });
