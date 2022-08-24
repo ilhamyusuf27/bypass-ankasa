@@ -52,6 +52,18 @@ CREATE TABLE IF NOT EXISTS flight(
   FOREIGN KEY(destination_id) REFERENCES destination(destination_id)
 );
 
+CREATE TABLE IF NOT EXISTS tickets(
+  ticket_id INT GENERATED ALWAYS AS IDENTITY,
+  airline_id INT,
+  origin VARCHAR(255),
+  destination VARCHAR(255),
+  departure DATE,
+  price INT,
+  stock INT,
+  PRIMARY KEY(ticket_id),
+  FOREIGN KEY(airline_id) REFERENCES airlines(airline_id)
+);
+
 CREATE TYPE status_ticket AS ENUM('success', 'waiting', 'failed');
 
 CREATE TABLE IF NOT EXISTS booking(
@@ -68,16 +80,4 @@ CREATE TABLE IF NOT EXISTS booking(
   FOREIGN KEY(user_id) REFERENCES users(user_id),
   FOREIGN KEY(airline_id) REFERENCES airlines(airline_id),
   FOREIGN KEY(ticket_id) REFERENCES tickets(ticket_id)
-);
-
-CREATE TABLE IF NOT EXISTS tickets(
-  ticket_id INT GENERATED ALWAYS AS IDENTITY,
-  airline_id INT,
-  origin VARCHAR(255),
-  destination VARCHAR(255),
-  departure DATE,
-  price INT,
-  stock INT,
-  PRIMARY KEY(ticket_id),
-  FOREIGN KEY(airline_id) REFERENCES airlines(airline_id)
 );

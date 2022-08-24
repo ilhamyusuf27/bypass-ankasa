@@ -25,7 +25,7 @@ const findAllDetail = () => {
 const findAllDetailSorted = () => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			"SELECT booking.*, users.full_name, tickets.origin, tickets.destination, tickets.departure, tickets.departure_time FROM booking LEFT JOIN users ON booking.user_id = users.user_id LEFT JOIN tickets ON booking.ticket_id = tickets.ticket_id ORDER BY ticket_status='waiting' DESC",
+			"SELECT booking.*, users.full_name, tickets.origin, tickets.destination, tickets.departure, tickets.departure_time FROM booking LEFT JOIN users ON booking.user_id = users.user_id LEFT JOIN tickets ON booking.ticket_id = tickets.ticket_id ORDER BY ticket_status='waiting' DESC, ticket_status DESC",
 			(err, result) => {
 				if (err) return reject(err);
 				resolve(result);
