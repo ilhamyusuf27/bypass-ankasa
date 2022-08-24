@@ -23,8 +23,20 @@ const getUserById = asyncHandler(async (req, res, next) => {
 const updateUser = asyncHandler(async (req, res, next) => {
   const userId = req?.params?.id
   const userImage = req?.file?.path
+  const { fullName, email, password, phone, gender, nationality } = req.body
   const user = await findById(userId)
-  const updatedUser = { ...req.body, userId, role: 'user', updatedAt: moment().format() }
+  const updatedUser = {
+    userId,
+    fullName: fullName || user?.full_name,
+    email: email || user?.email,
+    password: password || user?.password,
+    phone: phone || user?.phone,
+    gender: gender || user?.gender,
+    nationality: nationality || user?.nationality,
+    role: 'user',
+    updatedAt: moment().format()
+  }
+
   let userImagePublicId
 
   if(user.user_image) {
